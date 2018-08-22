@@ -1,0 +1,11 @@
+
+Todo:
+
+Nuget packages:
+  - Microsoft.EntityFrameworkCore.Sqlite --> used in Startup.cs to manage the DBContext
+
+Best Practices:
+  - Use asyncronous methods to retrieve data from the database
+
+API:
+  - Cors is needed when using different services (like API and Angular application) 
