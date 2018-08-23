@@ -26,10 +26,14 @@ namespace DatingApp.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Note: 0001 - DB conncetion - sqlite - install via nuget package manager (Microsoft.EntityFrameworkCore.Sqlite)
+            // use the default connection string with Sqlite
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddCors(); // Note: 0003.1 - Cors Support added as a service - cross site access control
+            // cors is used for cross platform redirecting
+            services.AddCors(); 
+            // making the authorization repository available -> Scoped means one instance per request
+            services.AddScoped<IAuthRepository, AuthRepository>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,7 +49,9 @@ namespace DatingApp.API
             }
 
             // app.UseHttpsRedirection();
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); // Note: 0003.2 - Cors Support used 
+            
+            // applying cors settings
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); 
             app.UseMvc();
         }
     }
