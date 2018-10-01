@@ -8,8 +8,8 @@ export class ErrorInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(req).pipe(catchError(error => {
             if (error instanceof HttpErrorResponse) {
-                // Special handling for 401 errors, otherwise not handled with the following code 
-                if (error.status === 401) {#
+                // Special handling for 401 errors, otherwise not handled with the following code
+                if (error.status === 401) {
                     return throwError(error.statusText);
                 }
 
