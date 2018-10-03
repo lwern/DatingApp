@@ -19,6 +19,8 @@ Nuget packages:
 Best Practices:
   - Use asyncronous methods to retrieve data from the database
   - The Token in appsettings.json should be a randomly generated string of big length
+  - Routing Guards:
+    - Generated via Angular CLI: ng g guard <name>
 
 API:
   - Cors is needed when using different services (like API and Angular application) 
