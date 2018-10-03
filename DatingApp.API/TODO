@@ -3,6 +3,18 @@ Todo:
 
 Nuget packages:
   - Microsoft.EntityFrameworkCore.Sqlite --> used in Startup.cs to manage the DBContext
+  - AlertifyJs: 
+    - Handles alerts in a SPA
+    - npm install alertifyjs --save
+  - JwtHelperService:
+    - Handling of JWT Tokens
+    - npm install @auth0/angular-jwt
+  - Ngx Bootstrap:
+    - Angular Component Templates
+    - npm install ngx-bootstrap --save
+  - Bootswatch:
+    - Design templates with many stype themes
+    - npm install bootswatch
 
 Best Practices:
   - Use asyncronous methods to retrieve data from the database
