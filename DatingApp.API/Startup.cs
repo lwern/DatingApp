@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DatingApp.API.Data;
 using DatingApp.API.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -36,11 +37,20 @@ namespace DatingApp.API
             // use the default connection string with Sqlite
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(opt => {
+                    // Handle errors when accessing the user objects with a token
+                    opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
             // cors is used for cross platform redirecting
             services.AddCors(); 
+            // Add AutoMapper service
+            services.AddAutoMapper();
+            // Add the seed class as a service for the API
+            services.AddTransient<Seed>();
             // making the authorization repository available -> Scoped means one instance per request
             services.AddScoped<IAuthRepository, AuthRepository>(); 
+            services.AddScoped<IDatingRepository, DatingRepository>();
             // Telling the API what authentication scheme to use
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
@@ -56,7 +66,7 @@ namespace DatingApp.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Seed seeder)
         {
             if (env.IsDevelopment())
             {
@@ -84,6 +94,9 @@ namespace DatingApp.API
 
             // app.UseHttpsRedirection();
             
+            // Seed the database - only uncomment when you want to reseed 
+            //seeder.SeedUsers();
+
             // applying cors settings
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); 
             app.UseAuthentication();

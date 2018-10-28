@@ -21,6 +21,9 @@ Best Practices:
   - The Token in appsettings.json should be a randomly generated string of big length
   - Routing Guards:
     - Generated via Angular CLI: ng g guard <name>
+  - JSON Seeding data:
+    - json-generator.com
+    - generate random data for seeding the database with example data
 
 API:
   - Cors is needed when using different services (like API and Angular application) 
