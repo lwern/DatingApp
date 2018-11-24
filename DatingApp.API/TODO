@@ -1,6 +1,11 @@
 
 Todo:
 
+Installs before Start:
+  - Dotnet CLI
+  - Angular CLI
+  - NodeJs
+
 Nuget packages:
   - Microsoft.EntityFrameworkCore.Sqlite --> used in Startup.cs to manage the DBContext
   - AlertifyJs: 
